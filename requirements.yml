@@ -1,0 +1,8 @@
+- name: Ensure dependencies
+  copy:
+    dest: requirements.yml
+    content: |
+      ---
+      roles:
+        - name: geerlingguy.firewall
+          version: 4.0.0
