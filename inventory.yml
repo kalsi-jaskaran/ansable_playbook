@@ -6,42 +6,53 @@ all:
           ansible_host: 172.21.2.196
           ansible_user: phub-prod-master1
           ansible_become: true
+          ansible_become_password: "Rogers#001"
         master2:
           ansible_host: 172.21.2.197
           ansible_user: phub-prod-master2
           ansible_become: true
+          ansible_become_password: "Rogers#002"
     proxies:
       hosts:
         proxy1:
           ansible_host: 172.21.2.198
           ansible_user: phub-prod-proxy1
           ansible_become: true
+          ansible_become_password: "Rogers#009"
         proxy2:
           ansible_host: 172.21.2.199
           ansible_user: phub-prod-proxy2
           ansible_become: true
+          ansible_become_password: "Rogers#010"
     workers:
       hosts:
         worker1:
           ansible_host: 172.21.2.200
           ansible_user: phub-prod-worker1
           ansible_become: true
+          ansible_become_password: "Rogers#003"
         worker2:
           ansible_host: 172.21.2.201
           ansible_user: phub-prod-worker2
           ansible_become: true
+          ansible_become_password: "Rogers#004"
         worker3:
           ansible_host: 172.21.2.202
           ansible_user: phub-prod-worker3
           ansible_become: true
+          ansible_become_password: "Rogers#005"
         worker4:
           ansible_host: 172.21.2.203
           ansible_user: phub-prod-worker4
           ansible_become: true
+          ansible_become_password: "Rogers#006"
         worker5:
           ansible_host: 172.21.2.204
           ansible_user: phub-prod-worker5
           ansible_become: true
+          ansible_become_password: "Rogers#007"
         worker6:
           ansible_host: 172.21.2.205
           ansible_user: phub-prod-worker6
+          ansible_become: true
+          ansible_become_password: "Rogers#008"
