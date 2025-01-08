@@ -9,7 +9,7 @@
   roles:
     - environment
     - dependencies
-    - kubernetes_repo
+  #  - kubernetes_repo
     - haproxy
     - keepalived
     - kubernetes_master
