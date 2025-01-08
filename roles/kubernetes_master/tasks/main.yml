@@ -1,7 +1,7 @@
 ---
 - name: Initialize Kubernetes on Primary Master
   shell: "kubeadm init --control-plane-endpoint '{{ virtual_ip }}:6443' --pod-network-cidr=192.168.0.0/16"
-  when: "inventory_hostname == 'prod-phub-master1'"
+  when: "inventory_hostname == 'phub-prod-master1'"
 
 - name: Copy Kubeconfig to User Home Directory
   copy:
