@@ -1,0 +1,11 @@
+all:
+  hosts:
+    master1:
+      ansible_host: 172.21.2.196
+      ansible_user: prod-phub-master1
+      ansible_ssh_pass: "Rogers#001"
+    master2:
+      ansible_host: 172.21.2.197
+      ansible_user: prod-phub-master2
+      ansible_ssh_pass: "<Rogers#002"
+    # Add other hosts similarly
