@@ -1,14 +1,18 @@
 ---
-- name: Create Diretory
-  shell: "sudo mkdir -p -m 755 /etc/apt/keyrings"
+- name: Create Directory for Apt Keyrings
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
 
 - name: Add Kubernetes Apt Key
-  shell: "curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg"
+  shell: "curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg"
 
 - name: Add Kubernetes Apt Repository
-  apt_repository:
-    repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
-    state: present
+  copy:
+    dest: /etc/apt/sources.list.d/kubernetes.list
+    content: |
+      deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /
 
 - name: Install Kubernetes Tools
   apt:
