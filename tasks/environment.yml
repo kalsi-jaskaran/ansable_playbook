@@ -1,3 +1,4 @@
+---
 - name: Set Environment Variables for Proxies
   block:
     - name: Configure HTTP Proxy
