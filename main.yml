@@ -11,6 +11,6 @@
     - dependencies
   #  - kubernetes_repo
     - haproxy
-    - keepalived
+  #  - keepalived
     - kubernetes_master
     - kubernetes_worker
