@@ -1,1 +1,46 @@
 
+---
+- name: Configure HAProxy on Load Balancer Nodes
+  tasks:
+    - name: Install HAProxy
+      apt:
+        name: haproxy
+        state: latest
+
+    - name: Configure HAProxy for Kubernetes API Server
+      copy:
+        dest: /etc/haproxy/haproxy.cfg
+        content: |
+          global
+            log /dev/log local0
+            log /dev/log local1 notice
+            chroot /var/lib/haproxy
+            stats socket /run/haproxy/admin.sock mode 660 level admin
+            stats timeout 30s
+            user haproxy
+            group haproxy
+            daemon
+
+          defaults
+            log global
+            option httplog
+            option dontlognull
+            timeout connect 5000ms
+            timeout client 50000ms
+            timeout server 50000ms
+
+          frontend kubernetes_frontend
+            bind *:6443
+            mode tcp
+            default_backend kubernetes_backend
+
+          backend kubernetes_backend
+            mode tcp
+            balance roundrobin
+            server master1 172.21.2.196:6443 check
+            server master2 172.21.2.197:6443 check
+
+    - name: Restart HAProxy
+      service:
+        name: haproxy
+        state: restarted
