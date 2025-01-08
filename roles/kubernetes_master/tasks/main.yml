@@ -1,23 +1,20 @@
 ---
-- name: Initialize Kubernetes on Master Nodes
-  tasks:
-    - name: Initialize Kubernetes on Primary Master
-      shell: "kubeadm init --control-plane-endpoint '{{ virtual_ip }}:6443' --pod-network-cidr=192.168.0.0/16"
-      when: "inventory_hostname == 'prod-phub-master1'"
+- name: Initialize Kubernetes on Primary Master
+  shell: "kubeadm init --control-plane-endpoint '{{ virtual_ip }}:6443' --pod-network-cidr=192.168.0.0/16"
+  when: "inventory_hostname == 'prod-phub-master1'"
 
-    - name: Copy Kubeconfig to User Home Directory
-      copy:
-        src: /etc/kubernetes/admin.conf
-        dest: ~/.kube/config
-        remote_src: yes
+- name: Copy Kubeconfig to User Home Directory
+  copy:
+    src: /etc/kubernetes/admin.conf
+    dest: ~/.kube/config
+    remote_src: yes
 
-    - name: Install Calico Network Plugin
-      shell: |
-        kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/tigera-operator.yaml
-        kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/custom-resources.yaml
-      register: calico_install
+- name: Install Calico Network Plugin
+  shell: |
+    kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/tigera-operator.yaml
+    kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/custom-resources.yaml
+  register: calico_install
 
-    - name: Wait for Calico to be Ready
-      shell: "kubectl wait --for=condition=Available --timeout=600s deployment/calico-kube-controllers -n calico-system"
-      when: calico_install is succeeded
-
+- name: Wait for Calico to be Ready
+  shell: "kubectl wait --for=condition=Available --timeout=600s deployment/calico-kube-controllers -n calico-system"
+  when: calico_install is succeeded
