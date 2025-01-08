@@ -1,1 +1,8 @@
+---
+- name: Join Worker Nodes to Kubernetes Cluster
+  tasks:
+    - name: Join command for worker nodes
+      shell: "kubeadm join {{ virtual_ip }}:6443 --token <token> --discovery-token-ca-cert-hash <hash>"
+        args:
+          warn: false
 
