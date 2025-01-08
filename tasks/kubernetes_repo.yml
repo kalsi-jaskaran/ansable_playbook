@@ -20,4 +20,3 @@
 
     - name: Hold Kubernetes Packages
       shell: "apt-mark hold kubelet kubeadm kubectl"
-

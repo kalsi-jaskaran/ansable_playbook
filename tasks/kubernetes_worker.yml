@@ -36,3 +36,21 @@
     - name: Enable Firewall
       ufw:
         state: enabled
+
+# Best Practices
+- name: Enforce Idempotency and Validation
+  block:
+    - name: Verify HAProxy Configuration
+      command: haproxy -c -f /etc/haproxy/haproxy.cfg
+      register: haproxy_check
+      failed_when: haproxy_check.rc != 0
+
+    - name: Ensure Keepalived Service is Enabled
+      service:
+        name: keepalived
+        enabled: true
+
+    - name: Validate Kubernetes Cluster Status
+      shell: "kubectl get nodes"
+      register: k8s_status
+      failed_when: "k8s_status.rc != 0 or 'NotReady' in k8s_status.stdout"

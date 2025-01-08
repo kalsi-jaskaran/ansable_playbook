@@ -11,5 +11,12 @@
         dest: ~/.kube/config
         remote_src: yes
 
-    - name: Install Flannel Network Plugin
-      shell: "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
+    - name: Install Calico Network Plugin
+      shell: |
+        kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/tigera-operator.yaml
+        kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/custom-resources.yaml
+      register: calico_install
+
+    - name: Wait for Calico to be Ready
+      shell: "kubectl wait --for=condition=Available --timeout=600s deployment/calico-kube-controllers -n calico-system"
+      when: calico_install is succeeded
