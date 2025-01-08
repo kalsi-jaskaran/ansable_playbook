@@ -1,1 +1,6 @@
-# ansable_playbook
+- Create a README.md with:
+  - Overview of the playbook.
+  - Prerequisites (Ansible, servers with SSH access).
+  - Steps to run the playbook.
+  - Troubleshooting tips.
+  - Security measures and configurations.
