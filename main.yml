@@ -1,9 +1,16 @@
-# Main playbook file for deploying Kubernetes cluster
+---
+# Main playbook for deploying Kubernetes cluster
 
-- import_playbook: tasks/environment.yml
-- import_playbook: tasks/dependencies.yml
-- import_playbook: tasks/kubernetes_repo.yml
-- import_playbook: tasks/haproxy.yml
-- import_playbook: tasks/keepalived.yml
-- import_playbook: tasks/kubernetes_master.yml
-- import_playbook: tasks/kubernetes_worker.yml
+- name: Deploy Kubernetes Cluster
+  hosts: all
+  become: true
+  vars_files:
+    - vars/all.yml
+  roles:
+    - environment
+    - dependencies
+    - kubernetes_repo
+    - haproxy
+    - keepalived
+    - kubernetes_master
+    - kubernetes_worker
