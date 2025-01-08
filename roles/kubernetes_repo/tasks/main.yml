@@ -6,9 +6,8 @@
     mode: '0755'
 
 - name: Add Kubernetes Apt Key
-  shell: "curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg"
-  args:
-    creates: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+  shell: "curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor --output /etc/apt/keyrings/kubernetes-apt-keyring.gpg"
+
     
 - name: Add Kubernetes Apt Repository
   shell: |
