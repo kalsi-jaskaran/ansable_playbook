@@ -8,5 +8,6 @@
       - gnupg
       - software-properties-common
       - keepalived
+      - gpg
     state: latest
     update_cache: yes
