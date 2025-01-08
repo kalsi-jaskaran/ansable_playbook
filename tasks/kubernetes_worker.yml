@@ -1,0 +1,38 @@
+- name: Join Worker Nodes to Kubernetes Cluster
+  when: "'workers' in group_names"
+  shell: "kubeadm join {{ virtual_ip }}:6443 --token <token> --discovery-token-ca-cert-hash <hash>"
+    args:
+      warn: false
+
+# Add logs collection for monitoring
+- name: Set up system logs and metrics
+  block:
+    - name: Install Fluentd
+      apt:
+        name: td-agent
+        state: latest
+    - name: Configure Fluentd for Kubernetes Logs
+      template:
+        src: templates/fluentd-kubernetes.conf.j2
+        dest: /etc/td-agent/td-agent.conf
+    - name: Restart Fluentd
+      service:
+        name: td-agent
+        state: restarted
+
+# Security Best Practices
+- name: Configure Firewall Rules
+  block:
+    - name: Allow Kubernetes API Server Traffic
+      ufw:
+        rule: allow
+        port: 6443
+        proto: tcp
+    - name: Allow NodePort Traffic
+      ufw:
+        rule: allow
+        port: 30000:32767
+        proto: tcp
+    - name: Enable Firewall
+      ufw:
+        state: enabled

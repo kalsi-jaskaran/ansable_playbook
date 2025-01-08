@@ -1,0 +1,15 @@
+- name: Initialize Kubernetes on Master Nodes
+  when: "'masters' in group_names"
+  block:
+    - name: Initialize Kubernetes on Primary Master
+      shell: "kubeadm init --control-plane-endpoint '{{ virtual_ip }}:6443' --pod-network-cidr=192.168.0.0/16"
+      when: "inventory_hostname == 'prod-phub-master1'"
+
+    - name: Copy Kubeconfig to User Home Directory
+      copy:
+        src: /etc/kubernetes/admin.conf
+        dest: ~/.kube/config
+        remote_src: yes
+
+    - name: Install Flannel Network Plugin
+      shell: "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"

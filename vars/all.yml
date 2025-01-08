@@ -1,0 +1,42 @@
+k8s_version: "1.28.0"
+proxy_http: "http://172.16.58.226:3128"
+proxy_https: "http://172.16.58.226:3128"
+virtual_ip: "172.21.2.218"
+keepalived_priority_master1: 101
+keepalived_priority_master2: 100
+gateway: "172.21.2.193"
+netmask: "255.255.255.192"
+
+hosts:
+  master1:
+    ansible_host: 172.21.2.196
+    device_name: prod-phub-master1
+    priority: 101
+  master2:
+    ansible_host: 172.21.2.197
+    device_name: prod-phub-master2
+    priority: 100
+  proxy1:
+    ansible_host: 172.21.2.198
+    device_name: prod-phub-proxy1
+  proxy2:
+    ansible_host: 172.21.2.199
+    device_name: prod-phub-proxy2
+  worker1:
+    ansible_host: 172.21.2.200
+    device_name: prod-phub-worker1
+  worker2:
+    ansible_host: 172.21.2.201
+    device_name: prod-phub-worker2
+  worker3:
+    ansible_host: 172.21.2.202
+    device_name: prod-phub-worker3
+  worker4:
+    ansible_host: 172.21.2.203
+    device_name: prod-phub-worker4
+  worker5:
+    ansible_host: 172.21.2.204
+    device_name: prod-phub-worker5
+  worker6:
+    ansible_host: 172.21.2.205
+    device_name: prod-phub-worker6

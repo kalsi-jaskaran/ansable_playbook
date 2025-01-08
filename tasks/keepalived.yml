@@ -1,0 +1,26 @@
+- name: Configure Keepalived for Virtual IP
+  when: "'proxy' in group_names"
+  block:
+    - name: Configure Keepalived
+      copy:
+        dest: /etc/keepalived/keepalived.conf
+        content: |
+          vrrp_instance VI_1 {
+              state MASTER
+              interface eth0
+              virtual_router_id 51
+              priority {{ keepalived_priority_master1 if inventory_hostname == 'prod-phub-master1' else keepalived_priority_master2 }}
+              advert_int 1
+              authentication {
+                  auth_type PASS
+                  auth_pass 12345
+              }
+              virtual_ipaddress {
+                  {{ virtual_ip }}
+              }
+          }
+
+    - name: Restart Keepalived
+      service:
+        name: keepalived
+        state: restarted

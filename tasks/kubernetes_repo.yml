@@ -1,0 +1,23 @@
+- name: Add Kubernetes Repository and Install Tools
+  block:
+    - name: Add Kubernetes Apt Key
+      shell: "curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -"
+      args:
+        warn: false
+
+    - name: Add Kubernetes Apt Repository
+      apt_repository:
+        repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+        state: present
+
+    - name: Install Kubernetes Tools
+      apt:
+        name:
+          - kubelet
+          - kubeadm
+          - kubectl
+        state: latest
+
+    - name: Hold Kubernetes Packages
+      shell: "apt-mark hold kubelet kubeadm kubectl"
+

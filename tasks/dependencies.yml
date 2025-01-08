@@ -1,0 +1,11 @@
+- name: Install Dependencies
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - software-properties-common
+      - keepalived
+    state: latest
+    update_cache: yes
