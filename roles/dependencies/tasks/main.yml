@@ -1,15 +1,12 @@
 ---
-- name: Install Dependencies
-  tasks:
-    - name: Install required packages
-      apt:
-        name:
-          - apt-transport-https
-          - ca-certificates
-          - curl
-          - gnupg
-          - software-properties-common
-          - keepalived
-        state: latest
-        update_cache: yes
-
+- name: Install required packages
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - software-properties-common
+      - keepalived
+    state: latest
+    update_cache: yes
