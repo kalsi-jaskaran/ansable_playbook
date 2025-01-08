@@ -1,8 +1,9 @@
 ---
+- name: Create Diretory
+  shell: "sudo mkdir -p -m 755 /etc/apt/keyrings"
+
 - name: Add Kubernetes Apt Key
-  shell: "curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -"
-  args:
-    warn: false
+  shell: "curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg"
 
 - name: Add Kubernetes Apt Repository
   apt_repository:
