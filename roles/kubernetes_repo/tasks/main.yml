@@ -5,13 +5,12 @@
     state: directory
     mode: '0755'
 
-- name: Add Kubernetes Apt Key
-  shell: "curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor --output /etc/apt/keyrings/kubernetes-apt-keyring.gpg"
-
-    
-- name: Add Kubernetes Apt Repository
-  shell: |
-    echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /" > /etc/apt/sources.list.d/kubernetes.list
+#- name: Add Kubernetes Apt Key
+#  shell: "curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor --output /etc/apt/keyrings/kubernetes-apt-keyring.gpg"
+   
+#- name: Add Kubernetes Apt Repository
+#  shell: |
+#    echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /" > /etc/apt/sources.list.d/kubernetes.list
 
 - name: Update APT Cache
   apt:
